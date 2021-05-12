@@ -148,40 +148,6 @@
   
     </form>
   </div>
-  
-  <div id="previous-events" class="container">
-    {% for event in events %}
-    <div class="event">
-      <div class="row">
-        <div class="col-sm-6">
-          <span class="date">{{ event.date|date:"Y.m.d." }}</span>
-        </div>
-        <div class="col-sm-6">
-          <span class="time">{{ event.date.hour }}:{{ event.date.minute }}:{{ event.date.second }}</span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6 label">
-          Km óra állása:
-        </div>
-        <div class="col-sm-6">
-          <span class="mileage">{{ event.km }}km</span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6 label">Tankolt üzemanyag:</div>
-        <div class="col-sm-6">
-          <span>{{ event.petrol_quantity_liter }}l</span><br>
-          <span>({{ event.petrol_type }}, {{ event.petrol_station }})</span>
-  
-        </div>
-      </div>
-      <div class="row">
-        <span class="price">{{ event.price_ft}} Ft</span>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
 {% endblock %}
 
 {% block script %}

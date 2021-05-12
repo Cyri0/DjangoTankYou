@@ -23,5 +23,20 @@ class TankEvent(models.Model):
     price_ft = models.FloatField(default=0.0)
     date = models.DateTimeField(auto_now_add=True, blank=True)
 
+    def to_class_name(value):
+        return value.__class__.__name__
+
+    def __str__(self):
+        return (f'{self.km} - {self.date}')
+
+class ServiceEvent(models.Model):
+    km = models.IntegerField(default=0)
+    note = models.TextField()
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    price_ft = models.FloatField(default=0.0)
+    
+    def to_class_name(value):
+        return value.__class__.__name__
+
     def __str__(self):
         return (f'{self.km} - {self.date}')

@@ -37,12 +37,31 @@
       padding-right: 20px;
     }
 
+    .service{
+      background-color: rgba(255, 255, 0, 0.4);
+    }
+
+    .service-note{
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    #previous-events .time span{
+        padding: 0;
+        margin: 0;
+    }
+
     @media screen and (max-width: 576px) {
       .label, #previous-events span, .date, .time  {
         text-align: center;
         width: 100%;
         display: block;
         float: none;
+      }
+
+      #previous-events .time span{
+        display: inline;
       }
 
       .date{
@@ -63,13 +82,16 @@
 {% block main %}
   <div id="previous-events" class="container">
     {% for event in events %}
+    {% if event.to_class_name == 'TankEvent' %}
     <div class="event">
       <div class="row">
         <div class="col-sm-6">
           <span class="date">{{ event.date|date:"Y.m.d." }}</span>
         </div>
         <div class="col-sm-6">
-          <span class="time">{{ event.date.hour }}:{{ event.date.minute }}:{{ event.date.second }}</span>
+          <span class="time">
+            {{ event.date|date:"H:i"}}
+          </span>
         </div>
       </div>
       <div class="row">
@@ -92,6 +114,36 @@
         <span class="price">{{ event.price_ft}} Ft</span>
       </div>
     </div>
+    {% else %}
+      {% if event.to_class_name == 'ServiceEvent' %}
+    <div class="event service">
+      <div class="row">
+        <div class="col-sm-6">
+          <span class="date">{{ event.date|date:"Y.m.d." }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="time">
+            {{ event.date|date:"H:i"}}
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 label">
+          Km óra állása:
+        </div>
+        <div class="col-sm-6">
+          <span class="mileage">{{ event.km }}km</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col service-note">{{ event.note }}</div>
+      </div>
+      <div class="row">
+        <span class="price">{{ event.price_ft}} Ft</span>
+      </div>
+    </div>
+      {% endif %}
+    {% endif %}
     {% endfor %}
   </div>
 {% endblock %}

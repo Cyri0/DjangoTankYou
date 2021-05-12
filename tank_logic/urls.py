@@ -8,4 +8,5 @@ urlpatterns = [
     path('new/', views.new_tank, name='new-tank-view'),
     path('stat/', views.stat, name="stat-view"),
     path('service/', views.service, name="service-view"),
+    path('save_service/', views.save_service, name="save_service"),
 ]
