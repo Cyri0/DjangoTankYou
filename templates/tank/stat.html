@@ -1,0 +1,77 @@
+{% extends "tank/base.html" %}
+
+{% block head %}
+<style>
+    .small{
+        font-size: 0.8rem;
+    }
+    .row{
+        margin-bottom: 20px;
+    }
+
+    @media screen and (max-width: 576px) {
+        [class*="col-"] {
+            text-align: center;
+        }
+
+        .row{
+            border-top: 2px solid black;
+            padding: 20px 0px;
+        }
+
+        .row:last-child{
+            border-bottom: 2px solid black;
+        }
+
+        .data{
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="container stats">
+    {% if last == None %}
+        <h1>Legalább két tankolás szükséges, hogy minden statisztikai megjelenjen!</h1>
+    {% else %}
+    
+    <div class="row">
+        <div class="col-sm-6">Legutóbbi tankolás: </div>
+        <div class="col-sm-6 data">{{ last.km }}km</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            Fogyasztás 100km-en:<br>
+            <span class="small">(Az utolsó két tankolás alapján)</span>
+        </div>
+        <div class="col-sm-6 data">
+            {% if consumption == None %}
+                -
+            {% else %}
+                {{ consumption }}l
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">Átlagosan tankolt mennyiség:</div>
+        <div class="col-sm-6 data">{{ average_quantity }}l</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">Átlagosan fizetett összeg:</div>
+        <div class="col-sm-6 data">{{ average_price }}Ft</div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">Mérés óta elköltött pénz:</div>
+        <div class="col-sm-6 data">{{ sum_price }}Ft</div>
+    </div>
+
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

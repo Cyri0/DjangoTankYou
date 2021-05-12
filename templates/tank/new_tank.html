@@ -1,0 +1,188 @@
+{% extends "tank/base.html" %}
+
+{% block head %}
+<style>
+
+    .row{
+      width: 100%;
+    }
+
+    input, select{
+      width: 100%;
+      height: 2.5rem;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type=submit]{
+      height: 70px;
+      max-width: 200px;
+      float: right;
+      border: none;
+      background-color: rgba(0, 128, 0, 0.2);
+      transition: 1s;
+      font-weight: bold;
+    }
+
+    input[type=submit]:hover{
+      background-color: rgba(0, 128, 0, 0.4);
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    [class*="col-"] {
+      padding: 10px;
+    }
+
+    .event{
+      background-color: white;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow:0px 0px 10px rgba(0, 0, 0, 0.5);
+      margin-bottom: 50px;
+    }
+
+    .date{
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .time{
+      float: right;
+      margin-right: -20px;
+      font-style: italic;
+    }
+
+    .label{
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .price{
+      font-size: 1.5rem;
+      font-style: italic;
+      text-align: right;
+    }
+
+    @media screen and (max-width: 576px) {
+      .label, #previous-events span, .date, .time  {
+        text-align: center;
+        width: 100%;
+        display: block;
+        float: none;
+      }
+
+      .date{
+        font-size: 2rem;
+      }
+
+      [class*="col-"] {
+        padding: 0px;
+      }
+      .row{
+        margin-bottom: 15px;
+      }   
+    }
+
+  </style>
+{% endblock %}
+
+{% block main %}
+<div id="add-new-event" class="container">
+
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-sm-5">Óraállás</div>
+        <div class="col-sm-7"><input required type="number" name="km" id="id_km"></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-5">Üzemanyag</div>
+        <div class="col-sm-7">
+            <select name="petrol_type" id="id_petrol_type">
+              {% for type in petrol_types %}
+                <option value="{{ type.0 }}">{{ type.1 }}</option>
+              {% endfor %}
+            </select>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-sm-5">Benzinkút</div>
+        <div class="col-sm-7">
+            <select name="petrol_station" id="id_petrol_station">
+              {% for station in petrol_stations %}
+                <option value="{{ station.0 }}">{{ station.1 }}</option>
+              {% endfor %}
+            </select>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-sm-5">Mennyiség (l)</div>
+        <div class="col-sm-7">
+          <input required type="number" name="petrol_quantity_liter" id="id_petrol_quantity_liter">
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-sm-5">Fizetett összeg (Ft)</div>
+        <div class="col-sm-7">
+          <input required type="number" name="price_ft" id="id_price_ft">
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-6"></div>
+        <div class="col-6">
+          <input type="submit" value="MENTÉS">
+        </div>
+      </div>
+  
+    </form>
+  </div>
+  
+  <div id="previous-events" class="container">
+    {% for event in events %}
+    <div class="event">
+      <div class="row">
+        <div class="col-sm-6">
+          <span class="date">{{ event.date|date:"Y.m.d." }}</span>
+        </div>
+        <div class="col-sm-6">
+          <span class="time">{{ event.date.hour }}:{{ event.date.minute }}:{{ event.date.second }}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 label">
+          Km óra állása:
+        </div>
+        <div class="col-sm-6">
+          <span class="mileage">{{ event.km }}km</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 label">Tankolt üzemanyag:</div>
+        <div class="col-sm-6">
+          <span>{{ event.petrol_quantity_liter }}l</span><br>
+          <span>({{ event.petrol_type }}, {{ event.petrol_station }})</span>
+  
+        </div>
+      </div>
+      <div class="row">
+        <span class="price">{{ event.price_ft}} Ft</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}

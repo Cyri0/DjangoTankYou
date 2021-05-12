@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TankYou</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+  <style>
+    body{
+      min-height: 100vh;
+      background-color: rgb(245, 245, 245);
+      font-size: 20px;
+      padding-bottom: 50px;
+    }
+
+    .menu{
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .container{
+      width: 80%;
+      max-width: 500px;
+      margin-top: 50px;
+    }
+    #menu_button{
+      display: none;
+      width: 70px;
+      height: 70px;
+      margin-left: calc(100% - 80px);
+      margin-top: 10px;
+      box-sizing: border-box;
+      font-size: 3rem;
+      border: none;
+    }
+    .menu a{
+        display: block;
+        text-align: center;
+        height: 50px;
+        background-color: rgb(221, 221, 221);
+        color: black;
+        font-weight: bold;
+        line-height:50px;
+        margin-bottom: 5px;
+        text-decoration: none;
+        transition: 1s;
+        padding: 0px 10px;
+      }
+
+      .menu a:hover{
+        background-color: rgb(172, 172, 172);
+      }
+
+    @media screen and (max-width: 700px) {
+      .container{
+        margin-top: 10px;
+      }
+      #menu_button{
+        display: block;
+      }
+      .menu{
+        display: block;
+        height: 0px;
+        overflow: hidden;
+        transition: 0.2s;
+      }
+
+      .open_menu{
+        height: 240px;
+      }
+
+
+    }
+  </style>
+  
+  {% block head %}
+  {% endblock %}
+</head>
+<body>
+<button id="menu_button" onclick="open_menu()">&#9776</button>
+<div class="container menu" id="menu">
+  <a href="{% url 'history-view' %}">Események</a>
+  <a href="{% url 'new-tank-view' %}">Tankolás</a>
+  <a href="{% url 'service-view' %}">Szerviz</a>
+  <a href="{% url 'stat-view' %}">Statisztika</a>
+</div>
+
+{% block main %}
+{% endblock %}
+
+<script>
+  let menu = document.getElementById('menu');
+
+  function open_menu(){
+    if(menu.classList.contains('open_menu'))
+      menu.classList.remove('open_menu')
+    else
+      menu.classList.add('open_menu');
+  }
+</script>
+{% block script %}
+{% endblock %}
+</body>
+</html>
