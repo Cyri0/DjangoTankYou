@@ -10,7 +10,8 @@ def helper(request):
     api_urls = {
         'tankapi/':'API map',
         'tankapi/events/':'Return the tank events',
-        'tankapi/average/':'Return the average fuel use in 100 km'
+        'tankapi/average/':'Return the average fuel use in 100 km',
+        'tankapi/sum_price/':'Return the summed price in HUF'
     }
     return Response(api_urls)
 
@@ -23,9 +24,18 @@ def events(request):
 @api_view(['GET'])
 def average(request):
     events = TankEvent.objects.all().order_by('-date')
-    km = calculations.calculate_consumption(events)
-
     average = {
-        'average_litre_per_hundred_km': km
+        'average_consumption': calculations.calculate_consumption(events),
+        'fuel_unit':'liter',
+        'distance': 100,
+        'distance_unit': 'kilometer'
     }
     return Response(average)
+
+@api_view(['GET'])
+def sum_price(request):
+    sprice = {
+        'summed_price': calculations.sum_price(TankEvent.objects.all()),
+        'currency': 'HUF'
+    }
+    return Response(sprice)
