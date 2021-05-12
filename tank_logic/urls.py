@@ -9,4 +9,5 @@ urlpatterns = [
     path('stat/', views.stat, name="stat-view"),
     path('service/', views.service, name="service-view"),
     path('save_service/', views.save_service, name="save_service"),
+    path('delete_event/<str:eventtype>/<int:id>', views.delete_event, name="delete_event"),
 ]

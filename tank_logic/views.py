@@ -69,3 +69,12 @@ def save_service(request):
         new_sevice_event.save()
         return redirect('history-view')
     return redirect('service-view')
+
+def delete_event(request, eventtype, id):
+    if eventtype == 'TankEvent':
+        removable_event = TankEvent.objects.filter(id=id)[0]
+        removable_event.delete()
+    elif eventtype == 'ServiceEvent':
+        removable_event = ServiceEvent.objects.filter(id=id)[0]
+        removable_event.delete()
+    return redirect('history-view')

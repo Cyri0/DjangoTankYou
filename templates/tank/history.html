@@ -30,6 +30,24 @@
       text-align: right;
     }
 
+    .delete a {
+      color: rgba(255, 0, 0, 0.548);;
+      text-decoration:none;
+      padding: 15px;
+      transition: 1s;
+      float: right;
+      display: block;
+      width: 120px;
+      text-align: center;
+    }
+
+    .delete a:hover {
+      color: white;
+      text-decoration:none;
+      background-color: rgba(255, 0, 0, 0.6);
+      padding: 15px;
+    }
+
     .price{
       font-size: 1.5rem;
       font-style: italic;
@@ -80,7 +98,10 @@
 {% endblock %}
 
 {% block main %}
-  <div id="previous-events" class="container">
+<div id="previous-events" class="container">
+  {% if events.0 == None %}
+  <h1>Még nincs egy eseményed sem!</h1>
+  {% else %}
     {% for event in events %}
     {% if event.to_class_name == 'TankEvent' %}
     <div class="event">
@@ -113,6 +134,12 @@
       <div class="row">
         <span class="price">{{ event.price_ft}} Ft</span>
       </div>
+      <div class="row delete">
+        <div class="col">
+          <a href="{% url 'delete_event' event.to_class_name event.id %}">Törlés</a>
+        </div>
+      </div>
+
     </div>
     {% else %}
       {% if event.to_class_name == 'ServiceEvent' %}
@@ -141,11 +168,17 @@
       <div class="row">
         <span class="price">{{ event.price_ft}} Ft</span>
       </div>
+      <div class="row delete">
+        <div class="col">
+          <a href="{% url 'delete_event' event.to_class_name event.id %}">Törlés</a>
+        </div>
+      </div>
     </div>
       {% endif %}
     {% endif %}
     {% endfor %}
   </div>
+  {% endif %}
 {% endblock %}
 
 {% block script %}
